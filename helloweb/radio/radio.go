@@ -1,4 +1,4 @@
-package main
+package radio
 
 import (
 	"html/template"
@@ -20,13 +20,7 @@ type PageVariables struct {
 	Answer           string
 }
 
-func main() {
-	http.HandleFunc("/", DisplayRadioButton)
-	http.HandleFunc("/selected", UserSelected)
-	http.ListenAndServe(":8080", nil)
-}
-
-func DisplayRadioButton(w http.ResponseWriter, r *http.Request) {
+func LoadRadios(w http.ResponseWriter, r *http.Request) {
 	Title := "Which do you prefer?"
 
 	MyRadioButtons := []RadioButton{
@@ -39,7 +33,7 @@ func DisplayRadioButton(w http.ResponseWriter, r *http.Request) {
 		PageRadioButtons: MyRadioButtons,
 	}
 
-	t, err := template.ParseFiles("select.html")
+	t, err := template.ParseFiles("radio/radio.html")
 	if err != nil {
 		log.Print("template parsing error: ", err)
 	}
@@ -51,7 +45,7 @@ func DisplayRadioButton(w http.ResponseWriter, r *http.Request) {
 
 }
 
-func UserSelected(w http.ResponseWriter, r *http.Request) {
+func LoadAnswer(w http.ResponseWriter, r *http.Request) {
 	r.ParseForm()
 	youranimal := r.Form.Get("animalselect")
 
@@ -61,7 +55,7 @@ func UserSelected(w http.ResponseWriter, r *http.Request) {
 		Answer:    youranimal,
 	}
 
-	t, err := template.ParseFiles("select.html")
+	t, err := template.ParseFiles("radio/radio.html")
 	if err != nil {
 		log.Print("template parsing error: ", err)
 	}

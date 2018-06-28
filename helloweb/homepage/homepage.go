@@ -1,4 +1,4 @@
-package main
+package homepage
 
 import (
 	"html/template"
@@ -12,12 +12,7 @@ type PageVariables struct {
 	Time string
 }
 
-func main() {
-	http.HandleFunc("/", HomePage)
-	http.ListenAndServe(":8080", nil)
-}
-
-func HomePage(w http.ResponseWriter, r *http.Request) {
+func Load(w http.ResponseWriter, r *http.Request) {
 	now := time.Now()
 	HomePageVars := PageVariables{
 
@@ -27,7 +22,7 @@ func HomePage(w http.ResponseWriter, r *http.Request) {
 		Time: now.Format("15:04:05"),
 	}
 
-	t, err := template.ParseFiles("homepage.html")
+	t, err := template.ParseFiles("homepage/homepage.html")
 
 	if err != nil {
 		log.Print("template parsing error: ", err)

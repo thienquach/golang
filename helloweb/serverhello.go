@@ -3,10 +3,15 @@ package main
 import (
 	"fmt"
 	"net/http"
+	"github.com/thienquach/golang/helloweb/homepage"
+	"github.com/thienquach/golang/helloweb/radio"
 )
 
 func main() {
-	http.HandleFunc("/", helloWorld)
+	http.HandleFunc("/hello", helloWorld)
+	http.HandleFunc("/", homepage.Load)
+	http.HandleFunc("/radios", radio.LoadRadios)
+	http.HandleFunc("/selected", radio.LoadAnswer)
 	http.ListenAndServe(":8080", nil)
 }
 
